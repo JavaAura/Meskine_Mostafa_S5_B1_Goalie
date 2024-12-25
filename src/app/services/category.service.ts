@@ -23,8 +23,8 @@ export class CategoryService {
     return of(category);
   }
 
-  deleteCategory(categoryId: number): Observable<void> {
+  deleteCategory(categoryId: number): Observable<Category[]> {
     this.categories = this.categories.filter((cat) => cat.id !== categoryId);
-    return of();
+    return of(this.categories);
   }
 }

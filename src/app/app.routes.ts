@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import {TestComponent} from "./test/test.component";
+import {CategoryComponent} from "./category/category.component";
 
 export const routes: Routes = [
-  {path: 'test', component: TestComponent},
+  {path: 'category', component: CategoryComponent},
 ];
