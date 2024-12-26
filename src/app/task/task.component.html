@@ -5,8 +5,10 @@
 
     <!-- Add Task Button -->
     <div class="mb-6 text-right">
-      <button (click)="openTaskForm()" class="rounded-md px-3.5 py-1 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-indigo-600 text-indigo-600 text-white">
-        <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-indigo-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+      <button (click)="openTaskForm()"
+              class="rounded-md px-3.5 py-1 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-indigo-600 text-indigo-600 text-white">
+        <span
+          class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-indigo-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
         <span class="relative text-indigo-600 transition duration-300 group-hover:text-white ease">Add Task</span>
       </button>
     </div>
@@ -15,10 +17,14 @@
   <!-- Task List -->
   <div class="space-y-4 h-full">
     <div class="flex justify-around w-full h-full gap-10">
-      <div class="flex-col-reverse w-full p-4 border border-gray-200 rounded-md bg-gray-100">
+      <div class="flex-col-reverse relative w-full px-4 pb-4 pt-16 border border-gray-200 rounded-md bg-gray-100">
+        <div
+          class="absolute top-0 left-0 p-3 w-full text-white bg-gray-600 text-center capitalize rounded-t-md rounded-b-sm">
+          not started
+        </div>
         <div
           *ngFor="let task of notStartedTasks"
-          class="relative flex justify-between mb-3 items-center bg-white p-4 border border-gray-200 rounded-md"
+          class="relative flex justify-between mb-3 w-full items-center bg-white p-4 border border-gray-200 rounded-md"
         >
           <div class="absolute top-0 left-0 w-full h-2 rounded-t-md" [ngClass]="getShadowClass(task.priority)"></div>
           <div>
@@ -26,36 +32,50 @@
             <p class="text-sm text-gray-600">
               Due: {{ task.dueDate | date: 'shortDate' }} | Priority: {{ task.priority }}
             </p>
-            <p class="text-sm text-gray-500">Status: {{ task.status }}</p>
+            <p class="text-sm text-gray-500">Category: {{ getCategoryName(task.categoryId) }}</p>
           </div>
-          <div class="flex space-x-2">
+          <div class="flex">
             <button
               (click)="openTaskForm(task)"
-              class="px-3 py-1"
+              class="p-1"
             >
-              <svg class="text-green-600 hover:text-green-800 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                <path d="M13 20.8268V22H14.1734C14.5827 22 14.7874 22 14.9715 21.9238C15.1555 21.8475 15.3003 21.7028 15.5897 21.4134L20.4133 16.5894C20.6864 16.3164 20.8229 16.1799 20.8959 16.0327C21.0347 15.7525 21.0347 15.4236 20.8959 15.1434C20.8229 14.9961 20.6864 14.8596 20.4133 14.5866C20.1403 14.3136 20.0038 14.1771 19.8565 14.1041C19.5763 13.9653 19.2473 13.9653 18.9671 14.1041C18.8198 14.1771 18.6833 14.3136 18.4103 14.5866L18.4103 14.5866L13.5867 19.4106C13.2972 19.7 13.1525 19.8447 13.0762 20.0287C13 20.2128 13 20.4174 13 20.8268Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                <path d="M19 11C19 11 19 9.4306 18.8478 9.06306C18.6955 8.69552 18.4065 8.40649 17.8284 7.82843L13.0919 3.09188C12.593 2.593 12.3436 2.34355 12.0345 2.19575C11.9702 2.165 11.9044 2.13772 11.8372 2.11401C11.5141 2 11.1614 2 10.4558 2C7.21082 2 5.58831 2 4.48933 2.88607C4.26731 3.06508 4.06508 3.26731 3.88607 3.48933C3 4.58831 3 6.21082 3 9.45584V14C3 17.7712 3 19.6569 4.17157 20.8284C5.23467 21.8915 6.8857 21.99 10 21.9991M12 2.5V3C12 5.82843 12 7.24264 12.8787 8.12132C13.7574 9 15.1716 9 18 9H18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <svg class="text-green-600 hover:text-green-800 transition-colors duration-200"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path
+                  d="M13 20.8268V22H14.1734C14.5827 22 14.7874 22 14.9715 21.9238C15.1555 21.8475 15.3003 21.7028 15.5897 21.4134L20.4133 16.5894C20.6864 16.3164 20.8229 16.1799 20.8959 16.0327C21.0347 15.7525 21.0347 15.4236 20.8959 15.1434C20.8229 14.9961 20.6864 14.8596 20.4133 14.5866C20.1403 14.3136 20.0038 14.1771 19.8565 14.1041C19.5763 13.9653 19.2473 13.9653 18.9671 14.1041C18.8198 14.1771 18.6833 14.3136 18.4103 14.5866L18.4103 14.5866L13.5867 19.4106C13.2972 19.7 13.1525 19.8447 13.0762 20.0287C13 20.2128 13 20.4174 13 20.8268Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path
+                  d="M19 11C19 11 19 9.4306 18.8478 9.06306C18.6955 8.69552 18.4065 8.40649 17.8284 7.82843L13.0919 3.09188C12.593 2.593 12.3436 2.34355 12.0345 2.19575C11.9702 2.165 11.9044 2.13772 11.8372 2.11401C11.5141 2 11.1614 2 10.4558 2C7.21082 2 5.58831 2 4.48933 2.88607C4.26731 3.06508 4.06508 3.26731 3.88607 3.48933C3 4.58831 3 6.21082 3 9.45584V14C3 17.7712 3 19.6569 4.17157 20.8284C5.23467 21.8915 6.8857 21.99 10 21.9991M12 2.5V3C12 5.82843 12 7.24264 12.8787 8.12132C13.7574 9 15.1716 9 18 9H18.5"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <button
-              (click)="deleteTask(1)"
-              class="px-3 py-1"
+              (click)="deleteTask(task.id)"
+              class="p-1"
             >
-              <svg class="text-red-500 hover:text-red-700 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <svg class="text-red-500 hover:text-red-700 transition-colors duration-200"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path
+                  d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path
+                  d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </button>
           </div>
         </div>
       </div>
-      <div class="flex w-full justify-between items-center p-4 border border-gray-200 rounded-md bg-gray-100">
+      <div class="flex-col-reverse relative w-full px-4 pb-4 pt-16 border border-gray-200 rounded-md bg-gray-100">
+        <div
+          class="absolute top-0 left-0 p-3 w-full text-white bg-gray-600 text-center capitalize rounded-t-md rounded-b-sm">
+          in progress
+        </div>
         <div
           *ngFor="let task of inProgressTasks"
-          class="relative flex justify-between mb-3 items-center bg-white p-4 border border-gray-200 rounded-md"
+          class="relative flex justify-between w-full mb-3 items-center bg-white p-4 border border-gray-200 rounded-md"
 
         >
           <div class="absolute top-0 left-0 w-full h-2 rounded-t-md" [ngClass]="getShadowClass(task.priority)"></div>
@@ -66,34 +86,48 @@
             </p>
             <p class="text-sm text-gray-500">Status: {{ task.status }}</p>
           </div>
-          <div class="flex space-x-2">
+          <div class="flex">
             <button
               (click)="openTaskForm(task)"
-              class="px-3 py-1"
+              class="p-1"
             >
-              <svg class="text-green-600 hover:text-green-800 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                <path d="M13 20.8268V22H14.1734C14.5827 22 14.7874 22 14.9715 21.9238C15.1555 21.8475 15.3003 21.7028 15.5897 21.4134L20.4133 16.5894C20.6864 16.3164 20.8229 16.1799 20.8959 16.0327C21.0347 15.7525 21.0347 15.4236 20.8959 15.1434C20.8229 14.9961 20.6864 14.8596 20.4133 14.5866C20.1403 14.3136 20.0038 14.1771 19.8565 14.1041C19.5763 13.9653 19.2473 13.9653 18.9671 14.1041C18.8198 14.1771 18.6833 14.3136 18.4103 14.5866L18.4103 14.5866L13.5867 19.4106C13.2972 19.7 13.1525 19.8447 13.0762 20.0287C13 20.2128 13 20.4174 13 20.8268Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                <path d="M19 11C19 11 19 9.4306 18.8478 9.06306C18.6955 8.69552 18.4065 8.40649 17.8284 7.82843L13.0919 3.09188C12.593 2.593 12.3436 2.34355 12.0345 2.19575C11.9702 2.165 11.9044 2.13772 11.8372 2.11401C11.5141 2 11.1614 2 10.4558 2C7.21082 2 5.58831 2 4.48933 2.88607C4.26731 3.06508 4.06508 3.26731 3.88607 3.48933C3 4.58831 3 6.21082 3 9.45584V14C3 17.7712 3 19.6569 4.17157 20.8284C5.23467 21.8915 6.8857 21.99 10 21.9991M12 2.5V3C12 5.82843 12 7.24264 12.8787 8.12132C13.7574 9 15.1716 9 18 9H18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <svg class="text-green-600 hover:text-green-800 transition-colors duration-200"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path
+                  d="M13 20.8268V22H14.1734C14.5827 22 14.7874 22 14.9715 21.9238C15.1555 21.8475 15.3003 21.7028 15.5897 21.4134L20.4133 16.5894C20.6864 16.3164 20.8229 16.1799 20.8959 16.0327C21.0347 15.7525 21.0347 15.4236 20.8959 15.1434C20.8229 14.9961 20.6864 14.8596 20.4133 14.5866C20.1403 14.3136 20.0038 14.1771 19.8565 14.1041C19.5763 13.9653 19.2473 13.9653 18.9671 14.1041C18.8198 14.1771 18.6833 14.3136 18.4103 14.5866L18.4103 14.5866L13.5867 19.4106C13.2972 19.7 13.1525 19.8447 13.0762 20.0287C13 20.2128 13 20.4174 13 20.8268Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path
+                  d="M19 11C19 11 19 9.4306 18.8478 9.06306C18.6955 8.69552 18.4065 8.40649 17.8284 7.82843L13.0919 3.09188C12.593 2.593 12.3436 2.34355 12.0345 2.19575C11.9702 2.165 11.9044 2.13772 11.8372 2.11401C11.5141 2 11.1614 2 10.4558 2C7.21082 2 5.58831 2 4.48933 2.88607C4.26731 3.06508 4.06508 3.26731 3.88607 3.48933C3 4.58831 3 6.21082 3 9.45584V14C3 17.7712 3 19.6569 4.17157 20.8284C5.23467 21.8915 6.8857 21.99 10 21.9991M12 2.5V3C12 5.82843 12 7.24264 12.8787 8.12132C13.7574 9 15.1716 9 18 9H18.5"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <button
-              (click)="deleteTask(1)"
-              class="px-3 py-1"
+              (click)="deleteTask(task.id)"
+              class="p-1"
             >
-              <svg class="text-red-500 hover:text-red-700 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <svg class="text-red-500 hover:text-red-700 transition-colors duration-200"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path
+                  d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path
+                  d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </button>
           </div>
         </div>
       </div>
-      <div class="flex w-full justify-between items-center p-4 border border-gray-200 rounded-md bg-gray-100">
+      <div class="flex-col-reverse relative w-full px-4 pb-4 pt-16 border border-gray-200 rounded-md bg-gray-100">
+        <div
+          class="absolute top-0 left-0 p-3 w-full text-white bg-gray-600 text-center capitalize rounded-t-md rounded-b-sm">
+          completed
+        </div>
         <div
           *ngFor="let task of completedTasks"
-          class="relative flex justify-between mb-3 items-center bg-white p-4 border border-gray-200 rounded-md"
+          class="relative flex justify-between w-dull mb-3 items-center bg-white p-4 border border-gray-200 rounded-md"
         >
           <div class="absolute top-0 left-0 w-full h-2 rounded-t-md" [ngClass]="getShadowClass(task.priority)"></div>
           <div>
@@ -103,25 +137,35 @@
             </p>
             <p class="text-sm text-gray-500">Status: {{ task.status }}</p>
           </div>
-          <div class="flex space-x-2">
+          <div class="flex">
             <button
               (click)="openTaskForm(task)"
-              class="px-3 py-1"
+              class="p-1"
             >
-              <svg class="text-green-600 hover:text-green-800 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                <path d="M13 20.8268V22H14.1734C14.5827 22 14.7874 22 14.9715 21.9238C15.1555 21.8475 15.3003 21.7028 15.5897 21.4134L20.4133 16.5894C20.6864 16.3164 20.8229 16.1799 20.8959 16.0327C21.0347 15.7525 21.0347 15.4236 20.8959 15.1434C20.8229 14.9961 20.6864 14.8596 20.4133 14.5866C20.1403 14.3136 20.0038 14.1771 19.8565 14.1041C19.5763 13.9653 19.2473 13.9653 18.9671 14.1041C18.8198 14.1771 18.6833 14.3136 18.4103 14.5866L18.4103 14.5866L13.5867 19.4106C13.2972 19.7 13.1525 19.8447 13.0762 20.0287C13 20.2128 13 20.4174 13 20.8268Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                <path d="M19 11C19 11 19 9.4306 18.8478 9.06306C18.6955 8.69552 18.4065 8.40649 17.8284 7.82843L13.0919 3.09188C12.593 2.593 12.3436 2.34355 12.0345 2.19575C11.9702 2.165 11.9044 2.13772 11.8372 2.11401C11.5141 2 11.1614 2 10.4558 2C7.21082 2 5.58831 2 4.48933 2.88607C4.26731 3.06508 4.06508 3.26731 3.88607 3.48933C3 4.58831 3 6.21082 3 9.45584V14C3 17.7712 3 19.6569 4.17157 20.8284C5.23467 21.8915 6.8857 21.99 10 21.9991M12 2.5V3C12 5.82843 12 7.24264 12.8787 8.12132C13.7574 9 15.1716 9 18 9H18.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <svg class="text-green-600 hover:text-green-800 transition-colors duration-200"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path
+                  d="M13 20.8268V22H14.1734C14.5827 22 14.7874 22 14.9715 21.9238C15.1555 21.8475 15.3003 21.7028 15.5897 21.4134L20.4133 16.5894C20.6864 16.3164 20.8229 16.1799 20.8959 16.0327C21.0347 15.7525 21.0347 15.4236 20.8959 15.1434C20.8229 14.9961 20.6864 14.8596 20.4133 14.5866C20.1403 14.3136 20.0038 14.1771 19.8565 14.1041C19.5763 13.9653 19.2473 13.9653 18.9671 14.1041C18.8198 14.1771 18.6833 14.3136 18.4103 14.5866L18.4103 14.5866L13.5867 19.4106C13.2972 19.7 13.1525 19.8447 13.0762 20.0287C13 20.2128 13 20.4174 13 20.8268Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path
+                  d="M19 11C19 11 19 9.4306 18.8478 9.06306C18.6955 8.69552 18.4065 8.40649 17.8284 7.82843L13.0919 3.09188C12.593 2.593 12.3436 2.34355 12.0345 2.19575C11.9702 2.165 11.9044 2.13772 11.8372 2.11401C11.5141 2 11.1614 2 10.4558 2C7.21082 2 5.58831 2 4.48933 2.88607C4.26731 3.06508 4.06508 3.26731 3.88607 3.48933C3 4.58831 3 6.21082 3 9.45584V14C3 17.7712 3 19.6569 4.17157 20.8284C5.23467 21.8915 6.8857 21.99 10 21.9991M12 2.5V3C12 5.82843 12 7.24264 12.8787 8.12132C13.7574 9 15.1716 9 18 9H18.5"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <button
-              (click)="deleteTask(1)"
-              class="px-3 py-1"
+              (click)="deleteTask(task.id)"
+              class="p-1"
             >
-              <svg class="text-red-500 hover:text-red-700 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <svg class="text-red-500 hover:text-red-700 transition-colors duration-200"
+                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path
+                  d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path
+                  d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </button>
           </div>
@@ -168,49 +212,64 @@
           ></textarea>
         </div>
 
-        <div class="mb-4">
-          <label for="dueDate" class="block text-sm font-medium text-gray-600 mb-2">
-            Due Date
-          </label>
-          <input
-            id="dueDate"
-            type="date"
-            [(ngModel)]="formTask.dueDate"
-            name="dueDate"
-            class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
-          />
+        <div class="flex justify-between gap-2 mb-4">
+          <div class="w-full">
+            <label for="dueDate" class="block text-sm font-medium text-gray-600 mb-2">
+              Due Date
+            </label>
+            <input
+              id="dueDate"
+              type="date"
+              [(ngModel)]="formTask.dueDate"
+              name="dueDate"
+              class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
+            />
+          </div>
+          <div class="w-full">
+            <label for="categoryId" class="block text-sm font-medium text-gray-600 mb-2">
+              Category
+            </label>
+            <select
+              id="categoryId"
+              [(ngModel)]="formTask.categoryId"
+              name="categoryId"
+              class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
+            >
+              <option *ngFor="let category of categories" [value]="category.id" [selected]="formTask.categoryId == category.id">{{ category.name }}</option>
+            </select>
+          </div>
         </div>
-
-        <div class="mb-4">
-          <label for="priority" class="block text-sm font-medium text-gray-600 mb-2">
-            Priority
-          </label>
-          <select
-            id="priority"
-            [(ngModel)]="formTask.priority"
-            name="priority"
-            class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
-          >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </div>
-
-        <div class="mb-4">
-          <label for="status" class="block text-sm font-medium text-gray-600 mb-2">
-            Status
-          </label>
-          <select
-            id="status"
-            [(ngModel)]="formTask.status"
-            name="status"
-            class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
-          >
-            <option value="not-started">Not Started</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-          </select>
+        <div class="flex justify-between gap-2 mb-4">
+          <div class="w-full">
+            <label for="priority" class="block text-sm font-medium text-gray-600 mb-2">
+              Priority
+            </label>
+            <select
+              id="priority"
+              [(ngModel)]="formTask.priority"
+              name="priority"
+              class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
+            >
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div class="w-full">
+            <label for="status" class="block text-sm font-medium text-gray-600 mb-2">
+              Status
+            </label>
+            <select
+              id="status"
+              [(ngModel)]="formTask.status"
+              name="status"
+              class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
+            >
+              <option value="not-started">Not Started</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
         </div>
 
         <div class="flex justify-end space-x-3">

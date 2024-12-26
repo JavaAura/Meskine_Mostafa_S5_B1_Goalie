@@ -3,6 +3,8 @@ import { Task } from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import {FormsModule} from "@angular/forms";
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {CategoryService} from "../services/category.service";
+import {Category} from "../models/category.model";
 
 @Component({
   selector: 'app-task',
@@ -26,14 +28,36 @@ export class TaskComponent {
   isTaskFormOpen = false;
   formTask: Task = this.getEmptyTask();
   selectedTask: Task | null = null;
+  categories: Category[] = [];
+  categoryLookup: Record<number, string> = {};
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private categoryService: CategoryService) {
     this.loadTasks();
   }
 
   loadTasks(): void {
-    this.taskService.getTasks().subscribe((tasks) => (this.tasks = tasks));
-    this.filterTasksByStatus();
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+      this.filterTasksByStatus();
+    });
+
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+      this.buildCategoryLookup(); // Create the map once categories are loaded
+    });
+  }
+
+  buildCategoryLookup(): void {
+    this.categoryLookup = this.categories.reduce((lookup, category) => {
+      if (category.id !== undefined) {
+        lookup[category.id] = category.name;
+      }
+      return lookup;
+    }, {} as Record<number, string>);
+  }
+
+  getCategoryName(id?: number): string {
+    return id && this.categoryLookup[id] ? this.categoryLookup[id] : 'Unknown category';
   }
 
   filterTasksByStatus(): void {
@@ -80,7 +104,7 @@ export class TaskComponent {
     }
   }
 
-  deleteTask(taskId: number): void {
+  deleteTask(taskId?: number): void {
     this.taskService.deleteTask(taskId).subscribe(() => this.loadTasks());
   }
 
@@ -90,8 +114,7 @@ export class TaskComponent {
       description: '',
       dueDate: new Date(),
       priority: 'low',
-      status: 'not-started',
-      categoryId: 0 // Default category
+      status: 'not-started'
     };
   }
 }

@@ -52,7 +52,7 @@ export class TaskService {
    * @param taskId The ID of the task to delete.
    * @returns Observable of the updated task list.
    */
-  deleteTask(taskId: number): Observable<Task[]> {
+  deleteTask(taskId?: number): Observable<Task[]> {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     return of(this.tasks);
   }
