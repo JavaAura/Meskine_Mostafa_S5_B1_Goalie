@@ -84,7 +84,7 @@
             <p class="text-sm text-gray-600">
               Due: {{ task.dueDate | date: 'shortDate' }} | Priority: {{ task.priority }}
             </p>
-            <p class="text-sm text-gray-500">Status: {{ task.status }}</p>
+            <p class="text-sm text-gray-500">Category: {{ getCategoryName(task.categoryId) }}</p>
           </div>
           <div class="flex">
             <button
@@ -135,7 +135,7 @@
             <p class="text-sm text-gray-600">
               Due: {{ task.dueDate | date: 'shortDate' }} | Priority: {{ task.priority }}
             </p>
-            <p class="text-sm text-gray-500">Status: {{ task.status }}</p>
+            <p class="text-sm text-gray-500">Category: {{ getCategoryName(task.categoryId) }}</p>
           </div>
           <div class="flex">
             <button

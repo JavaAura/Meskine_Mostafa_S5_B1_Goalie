@@ -43,7 +43,7 @@ export class TaskComponent {
 
     this.categoryService.getCategories().subscribe((categories) => {
       this.categories = categories;
-      this.buildCategoryLookup(); // Create the map once categories are loaded
+      this.buildCategoryLookup();
     });
   }
 
