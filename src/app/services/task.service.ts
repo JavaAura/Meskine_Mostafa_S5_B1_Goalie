@@ -56,4 +56,24 @@ export class TaskService {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     return of(this.tasks);
   }
+
+  /**
+   * Search tasks by title or description.
+   * @param searchTerm The search term to filter tasks.
+   * @returns Observable of the filtered task list.
+   */
+  searchTasks(searchTerm: string): Observable<Task[]> {
+    if (!searchTerm.trim()) {
+      return of(this.tasks);
+    }
+
+    const lowerCaseTerm = searchTerm.toLowerCase();
+    const filteredTasks = this.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(lowerCaseTerm) ||
+        (task.description && task.description.toLowerCase().includes(lowerCaseTerm))
+    );
+
+    return of(filteredTasks);
+  }
 }

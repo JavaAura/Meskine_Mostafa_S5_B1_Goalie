@@ -30,6 +30,7 @@ export class TaskComponent {
   selectedTask: Task | null = null;
   categories: Category[] = [];
   categoryLookup: Record<number, string> = {};
+  searchInput: string = '';
 
   constructor(private taskService: TaskService, private categoryService: CategoryService) {
     this.loadTasks();
@@ -64,6 +65,13 @@ export class TaskComponent {
     this.inProgressTasks = this.tasks.filter(task => task.status === 'in-progress');
     this.completedTasks = this.tasks.filter(task => task.status === 'completed');
     this.notStartedTasks = this.tasks.filter(task => task.status === 'not-started');
+  }
+
+  searchTasks(): void {
+    this.taskService.searchTasks(this.searchInput).subscribe((filteredTasks) => {
+      this.tasks = filteredTasks;
+      this.filterTasksByStatus();
+    });
   }
 
   getShadowClass(priority: string): string {
