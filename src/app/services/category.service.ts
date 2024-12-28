@@ -47,6 +47,15 @@ export class CategoryService {
     return of(category);
   }
 
+  editCategory(updatedCategory: Category): Observable<Category> {
+    const index = this.categories.findIndex(cat => cat.id === updatedCategory.id);
+    if (index !== -1) {
+      this.categories[index] = updatedCategory;
+      this.saveCategoriesToStorage();
+    }
+    return of(updatedCategory);
+  }
+
   /**
    * Delete a category by its ID.
    */

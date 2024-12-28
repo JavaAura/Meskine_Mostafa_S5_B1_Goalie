@@ -35,6 +35,12 @@
       >
         <span class="text-gray-800">{{ category.name }}</span>
         <button
+          (click)="selectCategory(category)"
+          class="text-green-500 hover:text-green-700"
+        >
+          Edit
+        </button>
+        <button
           (click)="deleteCategory(category.id)"
           class="text-red-500 hover:text-red-700"
         >
@@ -42,6 +48,11 @@
         </button>
       </li>
     </ul>
+    <div *ngIf="selectedCategory">
+      <input [(ngModel)]="selectedCategory.name" placeholder="Edit category name" />
+      <button (click)="editCategory()">Save</button>
+      <button (click)="selectedCategory = null">Cancel</button>
+    </div>
     <p *ngIf="categories.length === 0" class="text-sm text-gray-500 mt-3">
       No categories added yet.
     </p>

@@ -20,6 +20,7 @@ export class CategoryComponent implements OnInit {
   categories: Category[] = [];
   newCategoryName: string = '';
   errorMessage: string = '';
+  selectedCategory: Category | null = null;
 
   constructor(private categoryService: CategoryService) {}
 
@@ -57,6 +58,31 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  editCategory(): void {
+    if (this.selectedCategory) {
+      this.errorMessage = '';
+      const catName = this.selectedCategory.name.trim();
+
+      if (!this.selectedCategory.name.trim()) {
+        this.errorMessage = 'Category name cannot be empty!';
+        return;
+      }
+
+      if (this.selectedCategory && this.categories.some((cat) => cat.name === catName)) {
+        this.errorMessage = `Category with the name '${this.selectedCategory.name}' already exists!`;
+        return;
+      }
+
+      this.categoryService.editCategory(this.selectedCategory).subscribe({
+        next: () => {
+          this.loadCategories();
+          this.selectedCategory = null;
+        },
+        error: (err) => (this.errorMessage = 'Failed to edit category: ' + err)
+      });
+    }
+  }
+
   deleteCategory(categoryId: number): void {
     this.categoryService.deleteCategory(categoryId).subscribe({
       next: (categories) => {
@@ -65,5 +91,9 @@ export class CategoryComponent implements OnInit {
       },
       error: (err) => (this.errorMessage = 'Failed to delete category' + err)
     });
+  }
+
+  selectCategory(category: Category): void {
+    this.selectedCategory = { ...category };
   }
 }
