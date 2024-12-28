@@ -1,27 +1,110 @@
 # Goalie
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
+This is a Task Management Application built with Angular. It allows users to manage tasks and categories, providing functionalities to add, edit, delete, and search tasks and categories.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Add, edit, delete, and search tasks
+- Add, edit, delete, and search categories
+- Filter tasks by status (not started, in progress, completed)
+- Display task statistics on the dashboard
 
-## Code scaffolding
+## Technologies Used
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular
+- TypeScript
+- HTML
+- CSS
+- Tailwind CSS
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Prerequisites
 
-## Running unit tests
+- Node.js and npm installed
+- Angular CLI installed
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Installation
 
-## Running end-to-end tests
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MesVortex/Goalie.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Goalie
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Running the Application
 
-## Further help
+1. Start the development server:
+   ```bash
+   ng serve
+   ```
+2. Open your browser and navigate to `http://localhost:4200`.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Building the Application
+
+To build the application for production, run:
+```bash
+ng build
+```
+
+## Project Structure
+
+- `src/app`: Contains the main application code
+  - `components`: Contains the Angular components
+    - `category`: Category management component
+    - `task`: Task management component
+    - `dashboard`: Dashboard component
+    - `header`: Header component
+  - `models`: Contains the data models
+  - `services`: Contains the services for handling business logic and data
+- `src/assets`: Contains static assets
+- `src/environments`: Contains environment configuration files
+
+## Usage
+
+### Managing Tasks
+
+- Navigate to the "Tasks" page to view, add, edit, and delete tasks.
+- Use the search bar to filter tasks by title or description.
+
+### Managing Categories
+
+- Navigate to the "Categories" page to view, add, edit, and delete categories.
+
+### Dashboard
+
+- Navigate to the "Dashboard" page to view task statistics, including total tasks, completed tasks, pending tasks, and overdue tasks.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Make your changes and commit them with descriptive messages.
+4. Push your changes to your forked repository.
+5. Create a pull request to the main repository.
+
+## Planning
+
+Jira is used for planning and tracking the progress of this project. You can view Jira board [here](https://meskinemsoatafa.atlassian.net/jira/software/projects/GOAL/boards/18/backlog).
+
+## Figma Design
+
+The design prototypes and mockups are created using Figma. You can view the Figma design [here](https://www.figma.com/design/zU7VSnbJ4h169IhCzPstYS/Goalie?node-id=0-1&t=8763jYqfe4AV5h4A-1).
+
+
+## Contact
+
+For any questions or feedback, please contact The author of this project:
+
+- **Meskine Mostafa**
+  - Email: meskinemostafa4@gmail.com
+  - GitHub: [Meskine Mostafa](https://github.com/MesVortex).
