@@ -31,6 +31,7 @@ export class TaskComponent {
   categories: Category[] = [];
   categoryLookup: Record<number, string> = {};
   searchInput: string = '';
+  errorMessages: { dueDate: string; title: string; description: string } = { dueDate: '', title: '', description: '' };
 
   constructor(private taskService: TaskService, private categoryService: CategoryService) {
     this.loadTasks();
@@ -99,6 +100,27 @@ export class TaskComponent {
   }
 
   saveTask(): void {
+    const currentDate = new Date();
+    const dueDate = new Date(this.formTask.dueDate);
+    this.errorMessages = {
+      dueDate: '',
+      title: '',
+      description: ''
+    };
+
+
+    if (this.formTask.title.length < 5 || this.formTask.title.length > 50) {
+      this.errorMessages.title = 'Title must be at least 5 characters long';
+    }
+
+    if (this.formTask.description.length < 10 || this.formTask.description.length > 500) {
+      this.errorMessages.description = 'Description must be at least 10 characters long';
+    }
+
+    if (this.errorMessages.dueDate || this.errorMessages.title || this.errorMessages.description) {
+      return;
+    }
+
     if (this.selectedTask) {
       this.taskService.updateTask(this.formTask).subscribe(() => {
         this.loadTasks();

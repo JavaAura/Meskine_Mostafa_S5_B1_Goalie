@@ -214,6 +214,9 @@
             placeholder="Enter task title"
             class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
           />
+          <div *ngIf="errorMessages.title" class="text-red-500 text-sm mt-1">
+            {{ errorMessages.title }}
+          </div>
         </div>
 
         <div class="mb-4">
@@ -228,6 +231,9 @@
             placeholder="Enter task description"
             class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
           ></textarea>
+          <div *ngIf="errorMessages.description" class="text-red-500 text-sm mt-1">
+            {{ errorMessages.description }}
+          </div>
         </div>
 
         <div class="flex justify-between gap-2 mb-4">
@@ -242,6 +248,9 @@
               name="dueDate"
               class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-400 focus:ring-2 focus:outline-none"
             />
+            <div *ngIf="errorMessages.dueDate" class="text-red-500 text-sm mt-1">
+              {{ errorMessages.dueDate }}
+            </div>
           </div>
           <div class="w-full">
             <label for="categoryId" class="block text-sm font-medium text-gray-600 mb-2">
