@@ -41,10 +41,6 @@ export class CategoryService {
    * Create a new category.
    */
   createCategory(category: Category): Observable<Category> {
-    if (this.categories.some((cat) => cat.name === category.name.trim())) {
-      throw new Error('Category name must be unique');
-    }
-
     category.id = this.nextId++;
     this.categories.push(category);
     this.saveCategoriesToStorage();

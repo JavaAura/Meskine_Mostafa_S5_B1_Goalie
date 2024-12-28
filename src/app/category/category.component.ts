@@ -35,8 +35,15 @@ export class CategoryComponent implements OnInit {
   }
 
   addCategory(): void {
+    this.errorMessage = '';
+
     if (!this.newCategoryName.trim()) {
-      this.errorMessage = 'Category name cannot be empty';
+      this.errorMessage = 'Category name cannot be empty!';
+      return;
+    }
+
+    if (this.categories.some((cat) => cat.name === this.newCategoryName.trim())) {
+      this.errorMessage = `Category with the name '${this.newCategoryName}' already exists!`;
       return;
     }
 

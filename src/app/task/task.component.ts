@@ -100,7 +100,8 @@ export class TaskComponent {
   }
 
   saveTask(): void {
-    const currentDate = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const dueDate = new Date(this.formTask.dueDate);
     this.errorMessages = {
       dueDate: '',
@@ -108,6 +109,9 @@ export class TaskComponent {
       description: ''
     };
 
+    if (dueDate < today) {
+      this.errorMessages.dueDate = 'Due date cannot be in the past';
+    }
 
     if (this.formTask.title.length < 5 || this.formTask.title.length > 50) {
       this.errorMessages.title = 'Title must be at least 5 characters long';
@@ -144,7 +148,8 @@ export class TaskComponent {
       description: '',
       dueDate: new Date(),
       priority: 'low',
-      status: 'not-started'
+      status: 'not-started',
+      categoryId: 1,
     };
   }
 }
