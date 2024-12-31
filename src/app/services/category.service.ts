@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Category } from '../models/category.model';
+import {TaskService} from "./task.service";
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class CategoryService {
   private nextId = 1;
   private localStorageKey = 'categories';
 
-  constructor() {
+  constructor(private taskService: TaskService) {
     this.loadCategoriesFromStorage();
   }
 
@@ -62,6 +63,11 @@ export class CategoryService {
   deleteCategory(categoryId: number): Observable<Category[]> {
     this.categories = this.categories.filter((cat) => cat.id !== categoryId);
     this.saveCategoriesToStorage();
+    this.taskService.deleteTasksByCategoryId(categoryId);
     return of(this.categories);
+  }
+
+  getCategoryTaskCount(categoryId: number): number {
+    return this.taskService.getTasksByCategoryId(categoryId).length;
   }
 }

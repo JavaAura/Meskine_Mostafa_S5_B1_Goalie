@@ -99,4 +99,14 @@ export class TaskService {
 
     return of(filteredTasks);
   }
+
+  deleteTasksByCategoryId(categoryId: number): void {
+    this.tasks = this.tasks.filter((task) => task.categoryId != categoryId);
+    console.log('Tasks after deleting category:', this.tasks);
+    this.saveTasksToStorage();
+  }
+
+  getTasksByCategoryId(categoryId: number): Task[] {
+    return this.tasks.filter(task => task.categoryId == categoryId);
+  }
 }

@@ -74,13 +74,19 @@ ng build
 - Navigate to the "Tasks" page to view, add, edit, and delete tasks.
 - Use the search bar to filter tasks by title or description.
 
+![Task page](./src/assets/images/tasks.jpeg)
+
 ### Managing Categories
 
 - Navigate to the "Categories" page to view, add, edit, and delete categories.
 
+![Task page](./src/assets/images/categories.jpeg)
+
 ### Dashboard
 
 - Navigate to the "Dashboard" page to view task statistics, including total tasks, completed tasks, pending tasks, and overdue tasks.
+
+![Task page](./src/assets/images/dashboard.png)
 
 ## Contributing
 

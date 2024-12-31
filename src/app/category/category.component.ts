@@ -20,6 +20,7 @@ export class CategoryComponent implements OnInit {
   categories: Category[] = [];
   newCategoryName: string = '';
   errorMessage: string = '';
+  popUpErrorMessage: string = '';
   selectedCategory: Category | null = null;
 
   constructor(private categoryService: CategoryService) {}
@@ -60,16 +61,16 @@ export class CategoryComponent implements OnInit {
 
   editCategory(): void {
     if (this.selectedCategory) {
-      this.errorMessage = '';
+      this.popUpErrorMessage = '';
       const catName = this.selectedCategory.name.trim();
 
       if (!this.selectedCategory.name.trim()) {
-        this.errorMessage = 'Category name cannot be empty!';
+        this.popUpErrorMessage = 'Category name cannot be empty!';
         return;
       }
 
       if (this.selectedCategory && this.categories.some((cat) => cat.name === catName)) {
-        this.errorMessage = `Category with the name '${this.selectedCategory.name}' already exists!`;
+        this.popUpErrorMessage = `Category with the name '${this.selectedCategory.name}' already exists!`;
         return;
       }
 
@@ -95,5 +96,9 @@ export class CategoryComponent implements OnInit {
 
   selectCategory(category: Category): void {
     this.selectedCategory = { ...category };
+  }
+
+  getCategoryTaskCount(categoryId: number): number {
+    return this.categoryService.getCategoryTaskCount(categoryId);
   }
 }

@@ -113,12 +113,20 @@ export class TaskComponent {
       this.errorMessages.dueDate = 'Due date cannot be in the past';
     }
 
-    if (this.formTask.title.length < 5 || this.formTask.title.length > 50) {
+    if (this.formTask.title.length < 5) {
       this.errorMessages.title = 'Title must be at least 5 characters long';
     }
 
-    if (this.formTask.description.length < 10 || this.formTask.description.length > 500) {
+    if(this.formTask.title.length > 50) {
+      this.errorMessages.title = 'Title must be at most 50 characters long';
+    }
+
+    if (this.formTask.description.length < 10) {
       this.errorMessages.description = 'Description must be at least 10 characters long';
+    }
+
+    if(this.formTask.description.length > 500){
+      this.errorMessages.description = 'Description must be at most 500 characters long';
     }
 
     if (this.errorMessages.dueDate || this.errorMessages.title || this.errorMessages.description) {
@@ -149,7 +157,7 @@ export class TaskComponent {
       dueDate: new Date(),
       priority: 'low',
       status: 'not-started',
-      categoryId: 1,
+      categoryId: undefined,
     };
   }
 }
